@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button } from 'reactstrap';
 import "./style.css";
-class Register extends Component {
-    render() {
+const Register = () => {
         return ( 
             <div className="base-container">
               <div className="header">Register</div>
@@ -23,10 +22,9 @@ class Register extends Component {
                 </div>
               </div>
               <div className="footer">
-              <Button color="success">Confirm</Button>
+              <Button color="success" href="/Login">Confirm</Button>
               </div>
             </div>
         );
-    }
 }
 export default Register;

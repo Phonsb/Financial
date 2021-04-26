@@ -1,91 +1,63 @@
 import React, { useState } from 'react';
-import { Button } from './Button';
-import { Link } from 'react-router-dom';
-import './Navbar.css';
-import Dropdown from './Dropdown';
-import Home from "../Home/Home";
+import {
+  Collapse,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Button
+} from 'reactstrap';
+import './navbar.css';
 
-function Navbar() {
-  const [click, setClick] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
-
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
-
-  const onMouseEnter = () => {
-    if (window.innerWidth < 960) {
-      setDropdown(false);
-    } else {
-      setDropdown(true);
-    }
-  };
-
-  const onMouseLeave = () => {
-    if (window.innerWidth < 960) {
-      setDropdown(false);
-    } else {
-      setDropdown(false);
-    }
-  };
+const Navbar = () => {
+  const [collapsed, setCollapsed] = useState(true);
+  const toggleNavbar = () => setCollapsed(!collapsed);
 
   return (
-    <>
-      <nav className='navbar'>
-        <Link to='/Home' className='navbar-logo' onClick={closeMobileMenu}>
-          Financial Life
-        </Link>
-        <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-          <li className='nav-item'>
-            <Link to='/Home' className='nav-links' onClick={closeMobileMenu}>
-              Home
-            </Link>
-          </li>
-          <li
-            className='nav-item'
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          >
-            <Link
-              to='/services'
-              className='nav-links'
-              onClick={closeMobileMenu}
-            >
-              Services <i className='fas fa-caret-down' />
-            </Link>
-            {dropdown && <Dropdown />}
-          </li>
-          <li className='nav-item'>
-            <Link
-              to='/products'
-              className='nav-links'
-              onClick={closeMobileMenu}
-            >
-              Products
-            </Link>
-          </li>
-          <li className='nav-item'>
-            <Link
-              to='/contact-us'
-              className='nav-links'
-              onClick={closeMobileMenu}
-            >
-              Contact Us
-            </Link>
-          </li>
-          <li>
-            <Link
-              to='/sign-up'
-              className='nav-links-mobile'
-              onClick={closeMobileMenu}
-            >
-              Sign Up
-            </Link>
-          </li>
-        </ul>
-        <Button />
-      </nav>
-    </>
+    <div>
+       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <NavbarBrand href="/">Financial Life</NavbarBrand>
+        <NavbarToggler onClick={toggleNavbar} className="mr-2" />
+        <Collapse isOpen={!collapsed} navbar>
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <NavLink href="/">Home</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/Ledger">Ledger</NavLink>
+            </NavItem>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Planning
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem href="/Planning" >
+                  Financial Planning 
+                </DropdownItem>
+                {/* <DropdownItem href="/Expense">
+                  Planning Results
+                </DropdownItem> */}
+                <DropdownItem divider />
+                <DropdownItem href="/Planningresult" >
+                  Planning Results
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+            <NavItem>
+              <NavLink href="/Balance">Balance</NavLink>
+            </NavItem>
+            <NavItem>
+              <Button outline color="primary" href="/Login" >Log Out</Button>{' '}
+            </NavItem>
+          </Nav>
+        </Collapse>
+        </nav>
+    </div>
   );
 }
-
 export default Navbar;
