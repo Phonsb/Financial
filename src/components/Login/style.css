@@ -14,6 +14,7 @@
   }
     .image {
       width: 21em;
+      align-items: center;
     }
       img {
         width: 100%;

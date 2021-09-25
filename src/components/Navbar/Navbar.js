@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Collapse,
   NavbarToggler,
@@ -13,6 +13,8 @@ import {
   Button
 } from 'reactstrap';
 import './navbar.css';
+import firebase from '../firebase/firebase'
+import 'firebase/compat/auth'
 
 const Navbar = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -20,16 +22,16 @@ const Navbar = () => {
 
   return (
     <div>
-       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <NavbarBrand href="/">Financial Life</NavbarBrand>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <NavbarBrand href="/Home"><h6 className="mt-1 mx-5 text-light" >Financial Life</h6></NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
         <Collapse isOpen={!collapsed} navbar>
-          <Nav className="mr-auto" navbar>
+          <Nav className="mr-auto mb-1" navbar>
             <NavItem>
-              <NavLink href="/">Home</NavLink>
+              <NavLink href="/Home">Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/Ledger">Ledger</NavLink>
+              <NavLink href="/Transaction">Transaction</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
@@ -37,11 +39,8 @@ const Navbar = () => {
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem href="/Planning" >
-                  Financial Planning 
+                  Money Planning
                 </DropdownItem>
-                {/* <DropdownItem href="/Expense">
-                  Planning Results
-                </DropdownItem> */}
                 <DropdownItem divider />
                 <DropdownItem href="/Planningresult" >
                   Planning Results
@@ -49,14 +48,14 @@ const Navbar = () => {
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
-              <NavLink href="/Balance">Balance</NavLink>
+              <NavLink href="/Summaries">Summaries</NavLink>
             </NavItem>
             <NavItem>
-              <Button outline color="primary" href="/Login" >Log Out</Button>{' '}
+              <Button outline color="primary" onClick={() => firebase.auth().signOut()}>logout</Button>
             </NavItem>
           </Nav>
         </Collapse>
-        </nav>
+      </nav>
     </div>
   );
 }

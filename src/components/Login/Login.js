@@ -1,34 +1,48 @@
-import React from 'react';
-import { Button } from 'reactstrap';
-import loginImg from "../img/login.png";
+import React, { useEffect, useState, Text } from 'react';
 import "./style.css";
+import firebase from '../firebase/firebase'
+import 'firebase/compat/auth'
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import Home from '../Home/Home'
 
-const login = () => {
-    return (
-        <div className="base-container">
-            <div className="header">Login</div>
-            <div className="content">
-                <div className="image">
-                    <img src={loginImg} />
-                </div>
-                <div className="form">
-                    <div className="form-group">
-                        <label htmlFor="uername">User</label>
-                        <input type="text" name="username" placeholder="username" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" name="password" placeholder="password" />
-                    </div>
-                </div>
-            </div>
-            <div className="footer" style={{ border: 1 }}>
 
-                <Button type="password"color="success" className="btnLogin" href="/">Login</Button>
-                <Button color="primary" className="btnRegister" href="/Register">Register</Button>
-            </div>
-        </div>
-    );
+const Login = () => {
+    const [isSignedIn, setisSignedIn] = useState(false)
+    const uiConfig = {
+        signInFlow: "popup",
+        signInOptions: [
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+            firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ],
+        callbacks: {
+            signInSuccess: () => false
+        }
+    }
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged(user => {
+            console.log("user", !!user)
+            setisSignedIn(isSignedIn => !!user)
+        })
+    }, [])
+
+    return <div >
+
+        {isSignedIn ? (
+            <span>
+                <Home />
+            </span>
+        ) : (
+                <div>
+                    <h1 className="row d-flex justify-content-center">Please sign-in</h1>
+                    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+                </div>
+        )}
+
+
+    </div>
 
 }
-export default login;
+export default Login;
+

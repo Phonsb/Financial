@@ -1,0 +1,7 @@
+.header-box {
+    text-align: center;
+}
+
+.detail-active :active {
+    display: none;
+}

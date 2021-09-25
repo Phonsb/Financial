@@ -6,35 +6,23 @@ import Navbar from './components/Navbar/Navbar'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import Register from './components/Login/Register'
-import Balance from './components/Balalnce/Balance'
-import Ledger from './components/Ledger/Ledger'
+import Summaries from './components/Summaries/Summaries'
+import Transaction from './components/Transaction/Transaction'
 import Planning from './components/Planning/Planning'
 import Planningresult from './components/Planning/Planningresult'
+import firebase from './components/firebase/firebase'
 
 const App =()=> {
   return (
     <Router>
       <Navbar />
       <Switch>
-        <Route path='/' exact component={Home} />
-        <Route path='/Login'>
-          <Login/>
-        </Route>
-        <Route path='/Register'>
-          <Register/>
-          </Route>
-        <Route path='/Balance'>
-          <Balance/>
-        </Route>
-        <Route path='/Ledger'>
-          <Ledger/>
-        </Route>
-        <Route path='/Planning'>
-          <Planning/>
-        </Route>
-        <Route path='/Planningresult'>
-          <Planningresult/>
-        </Route>
+        <Route path='/' exact component={Login}></Route>
+        <Route path='/Home' exact component={Home}></Route>
+        <Route path='/Summaries' exact component={Summaries}></Route>
+        <Route path='/Transaction'exact component={Transaction}></Route>
+        <Route path='/Planning' exact component={Planning}></Route>
+        <Route path='/Planningresult' exact component={Planningresult}></Route>
       </Switch>
     </Router>
   );

@@ -8,6 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import Register from './components/Login/Register';
 import Home from './components/Home/Home';
 import * as serviceworker from "./serviceWorker";
+import 'antd/dist/antd.css';
 
 ReactDOM.render(
 <BrowserRouter>
