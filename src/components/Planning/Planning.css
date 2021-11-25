@@ -9,3 +9,13 @@
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 10px;
 }
+
+.bg-table {
+    background-color:#f5f5f5;
+}
+.bg-table-body {
+    background-color:#ffffff;
+}
+.bg-table-foot:hover {
+    background-color: #f6f6f6;
+}

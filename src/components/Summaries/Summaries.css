@@ -5,3 +5,51 @@
 .detail-active :active {
     display: none;
 }
+
+.ccard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border-left: 5px solid #1cc88a;
+    border-radius: 5%;
+}
+
+.ccard2 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border-left: 5px solid #4e73df;
+    border-radius: 5%;
+}
+
+.ccard3 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border-left: 5px solid #e74a3b;
+    border-radius: 5%;
+}
+
+.ccard4 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border-left: 5px solid #f6c23e;
+    border-radius: 5%;
+}

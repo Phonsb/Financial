@@ -91,7 +91,7 @@ const Planning = () => {
                 </div>
             </div>
             <div className="row d-flex justify-content-center mt-2 mb-2">
-                <Button className="btn bg-primary text-light mt-2 p-2 button-income  justify-content-center" color="info" onClick={addPlanning} >Save</Button>
+                <Button className="btn bg-primary text-light mt-2 p-2 button-income  justify-content-center" color="info" onClick={addPlanning} href="/Planningresult" >Save</Button>
             </div>
         </div>
     )

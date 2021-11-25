@@ -1,14 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Input, Button, ButtonGroup } from 'reactstrap';
 import { } from 'bootstrap'
 import "./Transaction.css"
-import { getDatabase, ref, set } from "@firebase/database";
+import { getDatabase, ref, set, onValue } from "@firebase/database";
 
 const Expense = () => {
+    useEffect(() => {
+        const db = getDatabase();
+        const starCountRefPlanning = ref(db, 'planning');
+        let total = [];
+        onValue(starCountRefPlanning, (snapshot) => {
+            const data = snapshot.val();
+            const planning = Object.values(data)
+            let topic = planning.length > 0 && planning.map(item => {
+                return item['toppic'] && (<option>📅 {item['toppic']}</option>)
+            })
+            setOption([<option>-Please select-</option>,...topic,...option])
+        });
+    }, [])
     const [date, setdate] = useState('')
     const [category, setcategory] = useState('')
     const [detail, setdetail] = useState('')
     const [amount, setamount] = useState('')
+    const [option, setOption] = useState([
+    <option>🍽 Food</option>,
+    <option>🚕 Transport</option>,
+    <option>🤵 Service</option>,
+    <option>👪 Family</option>,
+    <option>🚑 Cure</option>,
+    <option>🐶 Pet</option>,
+    <option>🛍 Shopping</option>,
+    <option>🏠️ Accommodation</option>,
+    <option>💸 Refund</option>,
+    <option>🤝 Donate</option>,
+    <option>🎁 Free</option>,
+    <option>📝 Other</option>])
 
     const handleOnChangeDate = (e) => {
         setdate(e.target.value)
@@ -50,20 +76,8 @@ const Expense = () => {
             </div>
             <div className="row d-flex justify-content-center mt-2">
                 <div className="col-md-1 mt-1"><label className="d-flex justify-content-end">Category</label></div>
-                <div className="col-md-3"><Input type="select" name="Category" id="category-in" onChange={handleOnChangeCategory} value={category}>
-                    <option>-Please select-</option>
-                    <option>🍽 Food</option>
-                    <option>🚕 Transport</option>
-                    <option>🤵 Service</option>
-                    <option>👪 Family</option>
-                    <option>🚑 Cure</option>
-                    <option>🐶 Pet</option>
-                    <option>🛍 Shopping</option>
-                    <option>🏠️ Accommodation</option>
-                    <option>💸 Refund</option>
-                    <option>🤝 Donate</option>
-                    <option>🎁 Free</option>
-                    <option>📝 Other</option>
+                <div className="col-md-3"><Input type="select" name="Category" id="category-in" onChange={handleOnChangeCategory} value={category} children={option}>
+
                 </Input>
                 </div>
             </div>
