@@ -121,7 +121,6 @@ const DetailSummaries = () => {
                         </tr>
                     </tbody>
                 </table>
-
             </div>
         </div>
 
@@ -138,10 +137,6 @@ const DetailSummaries = () => {
             total.push(...income)
             setincomeList(income)
             setincomeListDF(income)
-            // setDataTable({
-            //     columns: [...dataTable.columns],
-            //     rows: [...dataTable.rows,...income]
-            // })
         });
         const starCountRefExpense = ref(db, 'expense');
         onValue(starCountRefExpense, (snapshot) => {
@@ -150,11 +145,6 @@ const DetailSummaries = () => {
             total.push(...expense)
             setexpenseList(expense)
             setexpenseListDF(expense)
-            // console.log('dataTable',dataTable);
-            // setDataTable({
-            //     columns: [...dataTable.columns],
-            //     rows: [...dataTable.rows,...expense]
-            // })
         });
 
         setTimeout(() => {
@@ -264,16 +254,16 @@ const DetailSummaries = () => {
         )
     }
     return (
-        <div className="container">
+        <div className="container mt-3">
             <div className="row">
                 <div className="row mx-4">
                     <div className="col-lg-2 col-xs-12 col-sm-12 col-md-12">
-                        <h4 className="row  text-start text-success ">Total</h4>
+                        <h2 className="row  text-start text-success ">Total</h2>
                     </div>
                     <div className="col-lg-10 text-end col-xs-12 col-sm-12 col-md-12">
-                        <small>จาก&nbsp; &nbsp; </small>
+                        <small>From &nbsp; &nbsp; </small>
                         <Input className="btn border col-md-2 w-25 col-xs-12 col-sm-12 col-md-12" type="date" id="birthday" name="birthday" onChange={(e) => { setStartDate(e.target.value) }} ></Input>
-                        <small>&nbsp; &nbsp; ถึง&nbsp; &nbsp; </small>
+                        <small>&nbsp; &nbsp; To&nbsp; &nbsp; </small>
                         <Input className="btn border col-md-2 w-25 col-xs-12 col-sm-12 col-md-12" type="date" id="birthday" name="birthday" onChange={(e) => { setEndDate(e.target.value) }} ></Input>
                         <button className="btn btn-info text-light mx-1" onClick={() => { pickdate() }}>search</button>
                     </div>
@@ -418,7 +408,7 @@ const DetailSummaries = () => {
             </div>
 
 
-            <div className="container card mt-3">
+            <div className="container card  mt-3">
                 <MDBDataTableV5
                     hover entriesOptions={[5, 20, 25]}
                     entries={5} pagesAmount={4}

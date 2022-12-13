@@ -23,15 +23,18 @@ const Navbar = () => {
   return (
     <div>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <NavbarBrand href="/Home"><h6 className="mt-1 mx-5 text-light" >Financial Life</h6></NavbarBrand>
+        <NavbarBrand href="/Home"><h6 className="mt-1 mx-4 text-light" >Financial Life</h6></NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
         <Collapse isOpen={!collapsed} navbar>
-          <Nav className="mr-auto mb-1" navbar>
+          <Nav className="mr-auto mb-1 mx-4" navbar>
             <NavItem>
               <NavLink href="/Home">Home</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/Transaction">Transaction</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/Summaries">Summaries</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
@@ -48,7 +51,7 @@ const Navbar = () => {
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
-              <NavLink href="/Summaries">Summaries</NavLink>
+              <NavLink href="/Calculator">Calculator</NavLink>
             </NavItem>
             <NavItem>
               <Button outline color="primary" onClick={() => firebase.auth().signOut()}>logout</Button>

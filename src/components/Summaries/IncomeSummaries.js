@@ -41,7 +41,7 @@ const IncomeSummaries = () => {
             month: new Date(endDate).getMonth() + 1,
             year: new Date(endDate).getFullYear(),
         };
-        const filterDateIncome = incomeListDF.length > 0 && incomeListDF.filter(item => {
+        let filterDateIncome = incomeListDF.length > 0 && incomeListDF.filter(item => {
             const timestampItem = {
                 date: new Date(item['date']).getDate(),
                 month: new Date(item['date']).getMonth() + 1,
@@ -57,13 +57,54 @@ const IncomeSummaries = () => {
                 return item
             }
         });
-
         setincomesList(filterDateIncome)
         setDataTable({
             columns: [...dataTable.columns],
             rows: [...filterDateIncome]
         })
-        setChartData(filterDateIncome)
+        const initArr = [
+            ['Category', 'Income'],
+        ];
+        console.log('filterDateIncome',filterDateIncome);
+        filterDateIncome && filterDateIncome.map((item) => {
+            console.log(item);
+            const category = item['category'].split(' ');
+            const amount = (+item['amount']);
+            const findCategory = initArr ? initArr.findIndex(item => item[0].split(' ')[1] == category[1]) : '';
+            if (findCategory > 0) {
+                const prevAmount = initArr[findCategory] && initArr[findCategory][1] || 0;
+                initArr[findCategory][1] = prevAmount + amount
+            } else {
+                initArr.push([`${category[0]} ${category[1]} `, amount])
+            }
+        })
+        filterDateIncome = filterDateIncome.length == 0 ? [['category','income'],['ไม่มีข้อมูล',0]] : initArr
+        if(!startDate && !endDate){
+            const initArr = [
+                ['Category', 'Expense'],
+            ];
+            //console.log(incomesList);
+            incomeListDF && incomeListDF.map((item, index) => {
+                console.log(item);
+                const category = item['category'].split(' ');
+                const amount = (+item['amount']);
+                const findCategory = initArr.findIndex(item => item[0].split(' ')[1] == category[1]);
+                if (findCategory > 0) {
+                    const prevAmount = initArr[findCategory] && initArr[findCategory][1] || 0;
+                    initArr[findCategory][1] = prevAmount + amount
+                } else {
+                    initArr.push([`${category[0]} ${category[1]} `, amount])
+                }
+            })
+            setChartData(initArr);
+            setDataTable({
+                columns: [...dataTable.columns],
+                rows: [...incomeListDF]
+            })
+        }else{
+            setChartData(filterDateIncome);
+        }
+        
     }
 
     const Sumincome = () => {
@@ -155,6 +196,7 @@ const IncomeSummaries = () => {
         ]
     })
 
+
     const calIncomeChart = () => {
         const initArr = [
             ['Category', 'Income'],
@@ -164,7 +206,7 @@ const IncomeSummaries = () => {
             console.log(item);
             const category = item['category'].split(' ');
             const amount = (+item['amount']);
-            const findCategory = initArr.findIndex(item => item[0].split(' ')[1] == category[1]);
+            const findCategory = initArr ? initArr.findIndex(item => item[0].split(' ')[1] == category[1]) : '';
             if (findCategory > 0) {
                 const prevAmount = initArr[findCategory] && initArr[findCategory][1] || 0;
                 initArr[findCategory][1] = prevAmount + amount
@@ -173,22 +215,22 @@ const IncomeSummaries = () => {
             }
         })
         if (chartData.length == 0 && initArr.length > 1) {
+            console.log('initArr',initArr);
             setChartData(initArr);
         }
     }
 
-
     return (
-        <div className="container">
+        <div className="container mt-3">
             <div className="row">
                 <div className="row mx-4">
                     <div className="col-lg-2 col-xs-12 col-sm-12 col-md-12">
-                        <h4 className="row  text-start text-primary ">Income</h4>
+                        <h2 className="row  text-start text-primary ">Income</h2>
                     </div>
                     <div className="col-lg-10 text-end col-xs-12 col-sm-12 col-md-12">
-                        <small>จาก&nbsp; &nbsp; </small>
+                        <small>From&nbsp; &nbsp; </small>
                         <Input className="btn border col-md-2 w-25 col-xs-12 col-sm-12 col-md-12" type="date" id="birthday" name="birthday" onChange={(e) => { setStartDate(e.target.value) }} ></Input>
-                        <small>&nbsp; &nbsp; ถึง&nbsp; &nbsp; </small>
+                        <small>&nbsp; &nbsp; To&nbsp; &nbsp; </small>
                         <Input className="btn border col-md-2 w-25 col-xs-12 col-sm-12 col-md-12" type="date" id="birthday" name="birthday" onChange={(e) => { setEndDate(e.target.value) }} ></Input>
                         <button className="btn btn-info text-light mx-1" onClick={() => { pickdate() }}>search</button>
                     </div>

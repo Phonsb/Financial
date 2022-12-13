@@ -12,9 +12,9 @@ const TotalSummaries = () => {
             return <GraphSummaries/>
     }
     return (
-        <div className="header-box mt-3 ">
+        <div className="header-box">
             <h1>Total</h1>
-            <div className="row d-flex justify-content-center">
+            <div className="row d-flex justify-content-center">
             <button type="button" className="col-md-2 btn bg-info text-light " onClick={() => setRSelected(1)}>Detail</button>
             <button type="button" className="col-md-2 btn bg-warning text-light" onClick={() => setRSelected(2)} >Graph</button>
             </div>

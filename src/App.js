@@ -10,6 +10,7 @@ import Summaries from './components/Summaries/Summaries'
 import Transaction from './components/Transaction/Transaction'
 import Planning from './components/Planning/Planning'
 import Planningresult from './components/Planning/Planningresult'
+import Calculator from './components/Calculator/Calculator'
 import firebase from './components/firebase/firebase'
 
 const App =()=> {
@@ -23,6 +24,7 @@ const App =()=> {
         <Route path='/Transaction'exact component={Transaction}></Route>
         <Route path='/Planning' exact component={Planning}></Route>
         <Route path='/Planningresult' exact component={Planningresult}></Route>
+        <Route path='/Calculator' exact component={Calculator}></Route>
       </Switch>
     </Router>
   );

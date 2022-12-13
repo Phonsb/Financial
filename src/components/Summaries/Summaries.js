@@ -16,7 +16,7 @@ import "./Summaries.css"
 import TotalSummaries from './TotalSummaries'
 import IncomeSummaries from './IncomeSummaries'
 import ExpenseSummaries from './ExpenseSummaries'
-import DetailSummaries from './DetailSummaries';
+import DetailSummaries from './DetailSummaries'
 
 
 
@@ -36,17 +36,12 @@ const Summaries = () => {
                 <h1 className="col text-start ">Summaries</h1>
                 <div className="col text-end">
                     <ButtonGroup>
-                        <Button color="primary" onClick={() => setRSelected(1)} >Total</Button>
-                        <Button color="primary" onClick={() => setRSelected(2)} >Income</Button>
-                        <Button color="primary" onClick={() => setRSelected(3)} >Expense</Button>
+                        <Button color={rSelected === 1 ? "success" : 'secondary'} onClick={() => setRSelected(1)} >Total</Button>
+                        <Button color={rSelected === 2 ? "primary" : 'secondary'} onClick={() => setRSelected(2)} >Income</Button>
+                        <Button color={rSelected === 3 ? "danger" : 'secondary'} onClick={() => setRSelected(3)} >Expense</Button>
                     </ButtonGroup>
                 </div>
             </div>
-
-
-
-
-
             <div className="header-box">
                 {selectab()}
             </div>

@@ -3,8 +3,10 @@ import { Input, Button, ButtonGroup } from 'reactstrap';
 import { } from 'bootstrap'
 import "./Transaction.css"
 import { getDatabase, ref, set } from "@firebase/database";
+import { useHistory } from 'react-router-dom'
 
 const Income = () => {
+    const history = useHistory();
     const [date, setdate] = useState('')
     const [category, setcategory] = useState('')
     const [detail, setdetail] = useState('')
@@ -27,6 +29,7 @@ const Income = () => {
     }
 
     const addIncome = () => {
+        if (date && category && parseFloat(amount) > 0) {
         const db = getDatabase()
         set(
             ref(db, `income/${date}`), {
@@ -36,15 +39,13 @@ const Income = () => {
             amount
         }
         )
-        setdate('')
-        setcategory('')
-        setdetail('')
-        setamount(0)
+        history.push('/Summaries')
+    }
     }
 
     return (
-        <div className="header-box mt-3 card-box">
-            <h3>Income</h3>
+        <div className="header-box mt-3 card-box p-3 shadow">
+            <h2>Income</h2>
             <div className="row d-flex justify-content-center">
                 <div className="col-md-1 mt-1"><label className="d-flex justify-content-end">Date</label></div>
                 <div className="col-md-3"><Input className="btn border col-md-2" type="datetime-local" id="birthdaytime" name="birthdaytime" onChange={handleOnChangeDate} value={date}></Input> </div>
@@ -78,7 +79,7 @@ const Income = () => {
                 </div>
             </div>
             <div className="row d-flex justify-content-center mt-2 mb-2">
-                <Button className="btn bg-info text-light mt-2 p-2 button-income  justify-content-center" color="info " onClick={addIncome}>Save</Button>
+                <Button className="btn bg-primary text-light mt-2 p-2 button-income  justify-content-center" color="primary" onClick={addIncome}>Save</Button>
             </div>
 
         </div>

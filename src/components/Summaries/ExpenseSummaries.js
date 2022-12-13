@@ -31,6 +31,9 @@ const ExpenseSummaries = () => {
     }, [])
 
     const pickdate = () => {
+        console.log('startDate',startDate)
+        console.log('endDate',endDate)
+        
         const timestampStart = {
             date: new Date(startDate).getDate(),
             month: new Date(startDate).getMonth() + 1,
@@ -41,7 +44,7 @@ const ExpenseSummaries = () => {
             month: new Date(endDate).getMonth() + 1,
             year: new Date(endDate).getFullYear(),
         };
-        const filterDateExpense = expenseListDF.length > 0 && expenseListDF.filter(item => {
+        let filterDateExpense = expenseListDF.length > 0 && expenseListDF.filter(item => {
             const timestampItem = {
                 date: new Date(item['date']).getDate(),
                 month: new Date(item['date']).getMonth() + 1,
@@ -63,6 +66,46 @@ const ExpenseSummaries = () => {
             columns: [...dataTable.columns],
             rows: [...filterDateExpense]
         })
+        const initArr = [
+            ['Category', 'Expense'],
+        ];
+        filterDateExpense && filterDateExpense.map((item, index) => {
+            console.log(item);
+            const category = item['category'].split(' ');
+            const amount = (+item['amount']);
+            const findCategory = initArr.findIndex(item => item[0].split(' ')[1] == category[1]);
+            if (findCategory > 0) {
+                const prevAmount = initArr[findCategory] && initArr[findCategory][1] || 0;
+                initArr[findCategory][1] = prevAmount + amount
+            } else {
+                initArr.push([`${category[0]} ${category[1]} `, amount])
+            }
+        })
+        filterDateExpense = filterDateExpense.length == 0 ? [['category','income'],['ไม่มีข้อมูล',0]] : initArr
+        if(!startDate && !endDate){
+            const initArr = [
+                ['Category', 'Expense'],
+            ];
+            expenseListDF && expenseListDF.map((item, index) => {
+                console.log(item);
+                const category = item['category'].split(' ');
+                const amount = (+item['amount']);
+                const findCategory = initArr.findIndex(item => item[0].split(' ')[1] == category[1]);
+                if (findCategory > 0) {
+                    const prevAmount = initArr[findCategory] && initArr[findCategory][1] || 0;
+                    initArr[findCategory][1] = prevAmount + amount
+                } else {
+                    initArr.push([`${category[0]} ${category[1]} `, amount])
+                }
+            })
+            setChartData(initArr);
+            setDataTable({
+                columns: [...dataTable.columns],
+                rows: [...expenseListDF]
+            })
+        }else{
+            setChartData(filterDateExpense)
+        }
     }
 
     const Sumexpense = () => {
@@ -78,12 +121,9 @@ const ExpenseSummaries = () => {
     }
 
     const lastTransaction = () => {
-        //const timestamp = Math.round(new Date() / 1000)
         const lastItem = expenseList && expenseList.reduce((prev, curr) => {
             const prevTimestamp = new Date(prev['date']) / 1000;
             const currTimestamp = new Date(curr['date']) / 1000;
-            //console.log(`prev ${prev['detail']}`, new Date(prev['date']) / 1000);
-            //console.log('curr', new Date(curr['date']) / 1000);
             if (prevTimestamp > currTimestamp) {
                 return prev
             } else {
@@ -122,9 +162,6 @@ const ExpenseSummaries = () => {
 
             </div>
         </div>
-        // <div>
-        //     {new Date(lastItem['date']).toLocaleDateString('en-EN', options)} {lastItem['category']} {lastItem['detail']} {lastItem['amount']}
-        // </div>
     }
 
     const [dataTable, setDataTable] = useState({
@@ -165,9 +202,7 @@ const ExpenseSummaries = () => {
         const initArr = [
             ['Category', 'Expense'],
         ];
-        //console.log(incomesList);
         expenseList && expenseList.map((item, index) => {
-            console.log(item);
             const category = item['category'].split(' ');
             const amount = (+item['amount']);
             const findCategory = initArr.findIndex(item => item[0].split(' ')[1] == category[1]);
@@ -183,19 +218,18 @@ const ExpenseSummaries = () => {
         if (chartData.length == 0 && initArr.length > 1) {
             setChartData(initArr);
         }
-        console.log(chartData);
     }
     return (
-        <div className="container">
+        <div className="container mt-3">
             <div className="row">
                 <div className="row mx-4">
                     <div className="col-lg-2 col-xs-12 col-sm-12 col-md-12">
-                        <h4 className="row  text-start text-danger ">Expense</h4>
+                        <h2 className="row  text-start text-danger ">Expense</h2>
                     </div>
                     <div className="col-lg-10 text-end col-xs-12 col-sm-12 col-md-12">
-                        <small>จาก&nbsp; &nbsp; </small>
+                        <small>From&nbsp; &nbsp; </small>
                         <Input className="btn border col-md-2 w-25 col-xs-12 col-sm-12 col-md-12" type="date" id="birthday" name="birthday" onChange={(e) => { setStartDate(e.target.value) }} ></Input>
-                        <small>&nbsp; &nbsp; ถึง&nbsp; &nbsp; </small>
+                        <small>&nbsp; &nbsp; To&nbsp; &nbsp; </small>
                         <Input className="btn border col-md-2 w-25 col-xs-12 col-sm-12 col-md-12" type="date" id="birthday" name="birthday" onChange={(e) => { setEndDate(e.target.value) }} ></Input>
                         <button className="btn btn-info text-light mx-1" onClick={() => { pickdate() }}>search</button>
                     </div>
